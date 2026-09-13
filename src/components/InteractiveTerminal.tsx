@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { USER_INFO, PROJECTS, SKILL_CATEGORIES } from '../data';
+import { USER_INFO, SKILL_CATEGORIES } from '../data';
+import { useProjects } from '../context/ProjectsContext';
 import { Terminal as TerminalIcon, CornerDownLeft, Sparkles, Copy, Check } from 'lucide-react';
 
 interface CommandOutput {
@@ -8,6 +9,7 @@ interface CommandOutput {
 }
 
 export const InteractiveTerminal: React.FC = () => {
+  const { projects } = useProjects();
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<CommandOutput[]>([
     {
@@ -74,7 +76,7 @@ export const InteractiveTerminal: React.FC = () => {
           <div className="space-y-2 text-xs sm:text-sm font-mono text-zinc-300">
             <p className="text-cyan-400 font-semibold">[GITHUB REPOSITORIES: ascoler]</p>
             <div className="space-y-2 pl-2 border-l-2 border-emerald-500/30">
-              {PROJECTS.map((p) => (
+              {projects.map((p) => (
                 <div key={p.id} className="flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="text-white font-bold">{p.name}</span>

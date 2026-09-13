@@ -48,7 +48,7 @@ export const PROJECTS: Project[] = [
     title: "Go Distributed Web Crawler",
     tagline: "Распределенная многосервисная система краулинга с паттерном Producer-Consumer",
     description: "Высокопроизводительная система распределенного сбора данных на Go. Включает микросервис парсинга HTML, очередь ссылок в Redis, персистентное хранилище в MySQL и межсервисное gRPC-взаимодействие с пулом параллельных воркеров.",
-    stars: 1,
+    stars: 2,
     language: "Go",
     featured: true,
     tags: ["Go", "gRPC", "Redis", "MySQL", "Concurrency", "Microservices"],
@@ -108,7 +108,7 @@ export const PROJECTS: Project[] = [
     featured: true,
     tags: ["Python", "AsyncIO", "API", "High Performance"],
     githubUrl: "https://github.com/ascoler/O2",
-    highlight: "3 Stars on GitHub"
+    highlight: "AsyncIO + High Performance Engine"
   },
   {
     id: "fashion-assistant",

@@ -1,3 +1,4 @@
+import { ProjectsProvider } from './context/ProjectsContext';
 import { Background } from './components/Background';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -10,7 +11,8 @@ import { Footer } from './components/Footer';
 
 export const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-cyan-500/20 selection:text-cyan-300 relative font-sans overflow-x-hidden">
+    <ProjectsProvider>
+      <div className="min-h-screen bg-[#07070a] text-zinc-100 selection:bg-cyan-500/20 selection:text-cyan-300 relative font-sans overflow-x-hidden">
       {/* Sleek Interactive Background */}
       <Background />
 
@@ -28,6 +30,7 @@ export const App: React.FC = () => {
         <Footer />
       </div>
     </div>
+    </ProjectsProvider>
   );
 };
 

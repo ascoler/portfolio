@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { USER_INFO } from '../data';
-import { Terminal, Send, Mail, Check, Copy } from 'lucide-react';
+import { useProjects } from '../context/ProjectsContext';
+import { Terminal, Send, Mail, Check, Copy, Star } from 'lucide-react';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -10,6 +11,7 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const Navbar: React.FC = () => {
+  const { totalStars } = useProjects();
   const [copied, setCopied] = useState(false);
 
   const copyTelegram = () => {
@@ -63,9 +65,14 @@ export const Navbar: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-2 rounded-lg bg-zinc-900/80 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20 transition-all"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-900/80 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20 transition-all group"
+            title={`GitHub profile (${totalStars} stars)`}
           >
-            <GithubIcon className="w-4 h-4" />
+            <GithubIcon className="w-4 h-4 text-zinc-300 group-hover:text-white" />
+            <span className="text-xs font-mono text-amber-400 flex items-center gap-0.5 font-medium">
+              <Star className="w-3 h-3 fill-amber-400" />
+              <span>{totalStars}</span>
+            </span>
           </a>
 
           <a

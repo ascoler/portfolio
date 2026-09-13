@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { PROJECTS, Project } from '../data';
-import { ExternalLink, Star, GitBranch, Terminal, Server, Cpu, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Project } from '../data';
+import { useProjects } from '../context/ProjectsContext';
+import { ExternalLink, Star, Server, CheckCircle2, ChevronRight, RefreshCw } from 'lucide-react';
 
 export const ProjectGrid: React.FC = () => {
+  const { projects, isLive, isLoading, totalStars, refresh } = useProjects();
   const [filter, setFilter] = useState<'all' | 'Go' | 'Python'>('all');
   const [activeArch, setActiveArch] = useState(false);
 
   const filteredProjects = filter === 'all' 
-    ? PROJECTS 
-    : PROJECTS.filter(p => p.language === filter);
+    ? projects 
+    : projects.filter(p => p.language === filter);
 
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 relative">
@@ -16,15 +18,35 @@ export const ProjectGrid: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-widest mb-1.5">
-              <Server className="w-3.5 h-3.5" />
-              <span>Production & Systems</span>
+            <div className="flex flex-wrap items-center gap-2.5 mb-2">
+              <div className="inline-flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-widest">
+                <Server className="w-3.5 h-3.5" />
+                <span>Production & Systems</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
+                  <span className={`w-1.5 h-1.5 rounded-full bg-emerald-400 ${isLoading ? 'animate-ping' : 'animate-pulse'}`} />
+                  {isLoading ? 'Синхронизация...' : isLive ? 'GitHub Live' : 'GitHub Synced'}
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/20 text-[11px] font-mono text-amber-300 font-medium">
+                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                  <span>{totalStars} stars</span>
+                </span>
+                <button
+                  onClick={() => refresh()}
+                  disabled={isLoading}
+                  title="Обновить данные звезд с GitHub прямо сейчас"
+                  className="p-1 rounded-md bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-cyan-300 border border-white/10 transition-all active:scale-90"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-cyan-400' : ''}`} />
+                </button>
+              </div>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Проекты и разработки
             </h2>
             <p className="text-zinc-400 text-sm mt-2 max-w-xl">
-              Реализованные сервисы, распределенные краулеры и фоновые демоны с упором на отказоустойчивость и производительность.
+              Реализованные сервисы, распределенные краулеры и фоновые демоны с автоматической синхронизацией метрик с GitHub.
             </p>
           </div>
 
@@ -38,7 +60,7 @@ export const ProjectGrid: React.FC = () => {
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
-              Все ({PROJECTS.length})
+              Все ({projects.length})
             </button>
             <button
               onClick={() => setFilter('Go')}
@@ -94,12 +116,14 @@ export const ProjectGrid: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      {project.stars > 0 && (
-                        <div className="flex items-center gap-1 text-xs font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-md border border-amber-400/20">
-                          <Star className="w-3.5 h-3.5 fill-amber-400" />
-                          <span>{project.stars}</span>
-                        </div>
-                      )}
+                      <div className={`flex items-center gap-1 text-xs font-mono px-2 py-0.5 rounded-md border ${
+                        project.stars > 0
+                          ? 'text-amber-400 bg-amber-400/10 border-amber-400/20 font-semibold'
+                          : 'text-zinc-500 bg-zinc-800/30 border-white/5'
+                      }`}>
+                        <Star className={`w-3.5 h-3.5 ${project.stars > 0 ? 'fill-amber-400 text-amber-400' : 'text-zinc-500'}`} />
+                        <span>{project.stars}</span>
+                      </div>
                       <a
                         href={project.githubUrl}
                         target="_blank"

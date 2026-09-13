@@ -1,0 +1,211 @@
+import React, { useState } from 'react';
+import { PROJECTS, Project } from '../data';
+import { ExternalLink, Star, GitBranch, Terminal, Server, Cpu, CheckCircle2, ChevronRight } from 'lucide-react';
+
+export const ProjectGrid: React.FC = () => {
+  const [filter, setFilter] = useState<'all' | 'Go' | 'Python'>('all');
+  const [activeArch, setActiveArch] = useState(false);
+
+  const filteredProjects = filter === 'all' 
+    ? PROJECTS 
+    : PROJECTS.filter(p => p.language === filter);
+
+  return (
+    <section id="projects" className="py-20 px-4 sm:px-6 relative">
+      <div className="max-w-5xl mx-auto">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-widest mb-1.5">
+              <Server className="w-3.5 h-3.5" />
+              <span>Production & Systems</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Проекты и разработки
+            </h2>
+            <p className="text-zinc-400 text-sm mt-2 max-w-xl">
+              Реализованные сервисы, распределенные краулеры и фоновые демоны с упором на отказоустойчивость и производительность.
+            </p>
+          </div>
+
+          {/* Filters */}
+          <div className="flex items-center p-1 rounded-xl bg-zinc-900 border border-white/10 self-start md:self-auto">
+            <button
+              onClick={() => setFilter('all')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                filter === 'all'
+                  ? 'bg-white/10 text-white font-semibold shadow-sm'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              Все ({PROJECTS.length})
+            </button>
+            <button
+              onClick={() => setFilter('Go')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                filter === 'Go'
+                  ? 'bg-cyan-500/20 text-cyan-300 font-semibold border border-cyan-500/30'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              Go (Golang)
+            </button>
+            <button
+              onClick={() => setFilter('Python')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                filter === 'Python'
+                  ? 'bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/30'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              Python
+            </button>
+          </div>
+        </div>
+
+        {/* Bento Grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {filteredProjects.map((project) => {
+            const isFeatured = project.id === 'spider-go';
+
+            return (
+              <div
+                key={project.id}
+                className={`group rounded-2xl bg-zinc-900/40 border border-white/[0.08] hover:border-white/20 p-6 backdrop-blur-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/5 ${
+                  isFeatured && filter === 'all' ? 'md:col-span-2 bg-gradient-to-b from-zinc-900/80 to-zinc-900/40 border-cyan-500/30' : ''
+                }`}
+              >
+                <div>
+                  {/* Card top bar */}
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[11px] font-mono px-2 py-0.5 rounded-md font-semibold ${
+                        project.language === 'Go'
+                          ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20'
+                          : 'bg-amber-500/10 text-amber-300 border border-amber-500/20'
+                      }`}>
+                        {project.language}
+                      </span>
+                      {project.highlight && (
+                        <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/10 hidden sm:inline-block">
+                          {project.highlight}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      {project.stars > 0 && (
+                        <div className="flex items-center gap-1 text-xs font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-md border border-amber-400/20">
+                          <Star className="w-3.5 h-3.5 fill-amber-400" />
+                          <span>{project.stars}</span>
+                        </div>
+                      )}
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-lg bg-zinc-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                        title="Открыть GitHub репозиторий"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Title & Tagline */}
+                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-2">
+                    {project.name}
+                    <span className="text-xs font-normal text-zinc-400 ml-2 font-mono">
+                      // {project.title}
+                    </span>
+                  </h3>
+
+                  <p className="text-sm text-zinc-300 leading-relaxed mb-4">
+                    {project.description}
+                  </p>
+
+                  {/* Architectural breakdown for spider-go */}
+                  {project.architecture && isFeatured && (
+                    <div className="my-4 p-4 rounded-xl bg-zinc-950/60 border border-white/[0.08]">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-xs font-mono font-semibold text-cyan-300 uppercase tracking-wider">
+                          Архитектура распределенной системы
+                        </span>
+                        <button
+                          onClick={() => setActiveArch(!activeArch)}
+                          className="text-[11px] font-mono text-zinc-400 hover:text-white underline"
+                        >
+                          {activeArch ? 'Свернуть схему' : 'Развернуть схему'}
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono text-zinc-300">
+                        {project.architecture.map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 mt-0.5 shrink-0" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {activeArch && (
+                        <div className="mt-4 pt-3 border-t border-white/10 font-mono text-[11px] text-zinc-300 overflow-x-auto">
+                          <pre className="p-3 bg-black/50 rounded-lg text-cyan-300 leading-relaxed">
+{`+-------------------------------------------------------------+
+|               PRODUCER-CONSUMER CRAWLER CLUSTER              |
++-------------------------------------------------------------+
+  [Crawler Service]  --->  (gRPC IPC)  --->  [Queue Service (Redis)]
+          |                                          |
+          |                                    (Work Items)
+          v                                          v
+  [Storage Service (MySQL)] <--- (Persist) --- [Worker Pool N]`}
+                          </pre>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Metrics if present */}
+                  {project.metrics && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.metrics.map((m, i) => (
+                        <div key={i} className="px-2.5 py-1 rounded-md bg-zinc-950/80 border border-white/5 text-[11px] font-mono">
+                          <span className="text-zinc-400">{m.label}: </span>
+                          <span className="text-white font-semibold">{m.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Tags and Link */}
+                <div className="pt-4 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-800/60 text-zinc-400 border border-white/5"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-300 group-hover:text-cyan-400 transition-colors"
+                  >
+                    <span>Исходный код</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};

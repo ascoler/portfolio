@@ -1,6 +1,7 @@
 import React from 'react';
 import { USER_INFO } from '../data';
 import { ArrowDown, Send, Terminal, Sparkles, ExternalLink, ShieldCheck, Database, Layers } from 'lucide-react';
+import { scrollToElement } from '../utils/scroll';
 
 export const Hero: React.FC = () => {
   return (
@@ -40,6 +41,10 @@ export const Hero: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3.5 mb-10">
               <a
                 href="#projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToElement('#projects');
+                }}
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-zinc-950 font-semibold text-sm hover:bg-zinc-200 transition-all shadow-lg shadow-white/5 active:scale-[0.98]"
               >
                 <span>Смотреть проекты</span>
@@ -58,6 +63,10 @@ export const Hero: React.FC = () => {
 
               <a
                 href="#terminal"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToElement('#terminal');
+                }}
                 className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/5 text-zinc-400 hover:text-zinc-200 hover:border-white/15 font-mono text-xs transition-all"
               >
                 <Terminal className="w-3.5 h-3.5 text-zinc-400" />

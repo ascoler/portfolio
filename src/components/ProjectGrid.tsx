@@ -33,10 +33,11 @@ export const ProjectGrid: React.FC = () => {
                   <span>{totalStars} stars</span>
                 </span>
                 <button
+                  type="button"
                   onClick={() => refresh()}
                   disabled={isLoading}
                   title="Обновить данные звезд с GitHub прямо сейчас"
-                  className="p-1 rounded-md bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-cyan-300 border border-white/10 transition-all active:scale-90"
+                  className="p-1.5 rounded-md bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-cyan-300 border border-white/10 transition-all select-none cursor-pointer active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-cyan-400' : ''}`} />
                 </button>
@@ -50,34 +51,37 @@ export const ProjectGrid: React.FC = () => {
             </p>
           </div>
 
-          {/* Filters */}
-          <div className="flex items-center p-1 rounded-xl bg-zinc-900 border border-white/10 self-start md:self-auto">
+          {/* Filters - stable borders prevent layout jitter when switching active state */}
+          <div className="flex items-center p-1 rounded-xl bg-zinc-900 border border-white/10 self-start md:self-auto gap-1">
             <button
+              type="button"
               onClick={() => setFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border select-none cursor-pointer active:scale-95 touch-manipulation ${
                 filter === 'all'
-                  ? 'bg-white/10 text-white font-semibold shadow-sm'
-                  : 'text-zinc-400 hover:text-white'
+                  ? 'bg-white/10 text-white font-semibold shadow-sm border-white/10'
+                  : 'text-zinc-400 hover:text-white border-transparent'
               }`}
             >
               Все ({projects.length})
             </button>
             <button
+              type="button"
               onClick={() => setFilter('Go')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border select-none cursor-pointer active:scale-95 touch-manipulation ${
                 filter === 'Go'
-                  ? 'bg-cyan-500/20 text-cyan-300 font-semibold border border-cyan-500/30'
-                  : 'text-zinc-400 hover:text-white'
+                  ? 'bg-cyan-500/20 text-cyan-300 font-semibold border-cyan-500/30'
+                  : 'text-zinc-400 hover:text-white border-transparent'
               }`}
             >
               Go (Golang)
             </button>
             <button
+              type="button"
               onClick={() => setFilter('Python')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border select-none cursor-pointer active:scale-95 touch-manipulation ${
                 filter === 'Python'
-                  ? 'bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/30'
-                  : 'text-zinc-400 hover:text-white'
+                  ? 'bg-amber-500/20 text-amber-300 font-semibold border-amber-500/30'
+                  : 'text-zinc-400 hover:text-white border-transparent'
               }`}
             >
               Python
@@ -128,7 +132,7 @@ export const ProjectGrid: React.FC = () => {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg bg-zinc-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
+                        className="p-1.5 rounded-lg bg-zinc-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all select-none cursor-pointer active:scale-95 touch-manipulation"
                         title="Открыть GitHub репозиторий"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -156,8 +160,9 @@ export const ProjectGrid: React.FC = () => {
                           Архитектура распределенной системы
                         </span>
                         <button
+                          type="button"
                           onClick={() => setActiveArch(!activeArch)}
-                          className="text-[11px] font-mono text-zinc-400 hover:text-white underline"
+                          className="px-2.5 py-1 rounded-md text-[11px] font-mono text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all select-none cursor-pointer active:scale-95 touch-manipulation"
                         >
                           {activeArch ? 'Свернуть схему' : 'Развернуть схему'}
                         </button>
@@ -219,7 +224,7 @@ export const ProjectGrid: React.FC = () => {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-300 group-hover:text-cyan-400 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-300 group-hover:text-cyan-400 transition-all select-none cursor-pointer active:scale-95 touch-manipulation"
                   >
                     <span>Исходный код</span>
                     <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

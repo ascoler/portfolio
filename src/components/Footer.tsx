@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
             href={USER_INFO.socials.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors select-none cursor-pointer active:scale-95"
           >
             GitHub
           </a>
@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
             href={USER_INFO.socials.telegram}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors select-none cursor-pointer active:scale-95"
           >
             Telegram
           </a>
@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
             href={USER_INFO.socials.leetcode}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors select-none cursor-pointer active:scale-95"
           >
             LeetCode
           </a>

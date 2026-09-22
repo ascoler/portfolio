@@ -160,7 +160,15 @@ export const InteractiveTerminal: React.FC = () => {
       default:
         output = (
           <p className="text-zinc-400 font-mono text-xs">
-            Команда не найдена: <span className="text-red-400 font-semibold">{cmd}</span>. Введите <span className="text-cyan-400 underline cursor-pointer" onClick={() => handleCommand('help')}>help</span>.
+            Команда не найдена: <span className="text-red-400 font-semibold">{cmd}</span>. Введите{' '}
+            <button
+              type="button"
+              onClick={() => handleCommand('help')}
+              className="text-cyan-400 underline hover:text-cyan-300 font-semibold cursor-pointer"
+            >
+              help
+            </button>
+            .
           </p>
         );
     }
@@ -197,8 +205,9 @@ export const InteractiveTerminal: React.FC = () => {
             {quickCommands.map((cmd) => (
               <button
                 key={cmd}
+                type="button"
                 onClick={() => handleCommand(cmd)}
-                className="px-2.5 py-1 rounded-md bg-zinc-900 border border-white/10 text-[11px] font-mono text-zinc-300 hover:text-cyan-300 hover:border-cyan-500/40 transition-all active:scale-95"
+                className="px-2.5 py-1 rounded-md bg-zinc-900 border border-white/10 text-[11px] font-mono text-zinc-300 hover:text-cyan-300 hover:border-cyan-500/40 hover:bg-zinc-800/70 transition-all select-none cursor-pointer active:scale-95 touch-manipulation"
               >
                 ${cmd}
               </button>
@@ -260,7 +269,7 @@ export const InteractiveTerminal: React.FC = () => {
               <button
                 type="submit"
                 aria-label="Выполнить команду"
-                className="text-zinc-400 hover:text-cyan-400 transition-colors"
+                className="p-1.5 rounded-md text-zinc-400 hover:text-cyan-400 hover:bg-white/5 transition-all select-none cursor-pointer active:scale-90 touch-manipulation"
               >
                 <CornerDownLeft className="w-3.5 h-3.5" />
               </button>

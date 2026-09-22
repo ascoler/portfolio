@@ -39,39 +39,33 @@ export const Hero: React.FC = () => {
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-3.5 mb-10">
-              <a
-                href="#projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToElement('#projects');
-                }}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-zinc-950 font-semibold text-sm hover:bg-zinc-200 transition-all shadow-lg shadow-white/5 active:scale-[0.98]"
+              <button
+                type="button"
+                onClick={() => scrollToElement('#projects')}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-zinc-950 font-semibold text-sm hover:bg-zinc-200 transition-all shadow-lg shadow-white/5 select-none cursor-pointer active:scale-[0.97] touch-manipulation"
               >
                 <span>Смотреть проекты</span>
                 <ArrowDown className="w-4 h-4" />
-              </a>
+              </button>
 
               <a
                 href={USER_INFO.socials.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-zinc-900/90 border border-white/10 text-white font-medium text-sm hover:bg-zinc-800 hover:border-cyan-500/40 transition-all active:scale-[0.98]"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-zinc-900/90 border border-white/10 text-white font-medium text-sm hover:bg-zinc-800 hover:border-cyan-500/40 transition-all select-none cursor-pointer active:scale-[0.97] touch-manipulation"
               >
                 <Send className="w-4 h-4 text-cyan-400" />
                 <span>Написать в Telegram</span>
               </a>
 
-              <a
-                href="#terminal"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToElement('#terminal');
-                }}
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/5 text-zinc-400 hover:text-zinc-200 hover:border-white/15 font-mono text-xs transition-all"
+              <button
+                type="button"
+                onClick={() => scrollToElement('#terminal')}
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-900/60 border border-white/5 text-zinc-400 hover:text-cyan-300 hover:border-cyan-500/30 hover:bg-zinc-800/60 font-mono text-xs transition-all select-none cursor-pointer active:scale-[0.97] touch-manipulation"
               >
                 <Terminal className="w-3.5 h-3.5 text-zinc-400" />
                 <span>$ ./wake_up --interactive</span>
-              </a>
+              </button>
             </div>
           </div>
 

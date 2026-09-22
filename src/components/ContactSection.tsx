@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { USER_INFO } from '../data';
 import { Send, Mail, Copy, Check, MessageSquare, Coffee, ArrowUpRight } from 'lucide-react';
+import { copyText } from '../utils/clipboard';
 
 export const ContactSection: React.FC = () => {
   const [copiedTg, setCopiedTg] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const copyToClipboard = (text: string, type: 'tg' | 'email') => {
-    navigator.clipboard.writeText(text);
-    if (type === 'tg') {
-      setCopiedTg(true);
-      setTimeout(() => setCopiedTg(false), 2000);
-    } else {
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2000);
+  const handleCopy = async (text: string, type: 'tg' | 'email') => {
+    const success = await copyText(text);
+    if (success) {
+      if (type === 'tg') {
+        setCopiedTg(true);
+        setTimeout(() => setCopiedTg(false), 2000);
+      } else {
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2000);
+      }
     }
   };
 
@@ -24,7 +27,7 @@ export const ContactSection: React.FC = () => {
           {/* Ambient center spotlight */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-cyan-500/10 blur-[120px] pointer-events-none -z-10" />
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-mono mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-mono mb-4 select-none">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Get in touch</span>
           </div>
@@ -51,7 +54,7 @@ export const ContactSection: React.FC = () => {
                     href={USER_INFO.socials.telegram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-bold text-white hover:text-cyan-400 transition-colors flex items-center gap-1"
+                    className="text-sm font-bold text-white hover:text-cyan-400 transition-colors flex items-center gap-1 select-none cursor-pointer"
                   >
                     <span>{USER_INFO.socials.telegramHandle}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -60,9 +63,11 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <button
-                onClick={() => copyToClipboard(USER_INFO.socials.telegramHandle, 'tg')}
-                className="p-2 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors"
-                title="Копировать юзернейм"
+                type="button"
+                onClick={() => handleCopy(USER_INFO.socials.telegramHandle, 'tg')}
+                className="p-2.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-all select-none cursor-pointer active:scale-90 touch-manipulation"
+                title="Копировать юзернейм Telegram"
+                aria-label="Копировать юзернейм Telegram"
               >
                 {copiedTg ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -78,7 +83,7 @@ export const ContactSection: React.FC = () => {
                   <div className="text-[11px] font-mono text-zinc-400">Email</div>
                   <a
                     href={`mailto:${USER_INFO.socials.email}`}
-                    className="text-sm font-bold text-white hover:text-indigo-400 transition-colors flex items-center gap-1"
+                    className="text-sm font-bold text-white hover:text-indigo-400 transition-colors flex items-center gap-1 select-none cursor-pointer"
                   >
                     <span>{USER_INFO.socials.email}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -87,9 +92,11 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <button
-                onClick={() => copyToClipboard(USER_INFO.socials.email, 'email')}
-                className="p-2 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-colors"
+                type="button"
+                onClick={() => handleCopy(USER_INFO.socials.email, 'email')}
+                className="p-2.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-all select-none cursor-pointer active:scale-90 touch-manipulation"
                 title="Копировать email"
+                aria-label="Копировать email"
               >
                 {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -97,7 +104,7 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Quote */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-950/60 border border-white/5 text-xs font-mono text-zinc-400">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-950/60 border border-white/5 text-xs font-mono text-zinc-400 select-none">
             <Coffee className="w-3.5 h-3.5 text-amber-400" />
             <span>«{USER_INFO.quote}»</span>
           </div>

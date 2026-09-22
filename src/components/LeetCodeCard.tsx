@@ -31,7 +31,7 @@ export const LeetCodeCard: React.FC = () => {
                   href={USER_INFO.socials.leetcode}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs font-mono transition-all shadow-lg shadow-amber-500/20 active:scale-95"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs font-mono transition-all shadow-lg shadow-amber-500/20 select-none cursor-pointer active:scale-95 touch-manipulation"
                 >
                   <span>Профиль: @{USER_INFO.socials.leetcodeHandle}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
